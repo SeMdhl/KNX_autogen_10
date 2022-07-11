@@ -121,7 +121,7 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                             break;
 
                         case 1:
-                            Knx_dt_Hvac(sPath, iMaster, &iKnx, sRom[i], &xComment, iAntall);
+                            Knx_dt_Hvac(sPath, iMaster, &iKnx, sRom[i], &xComment, iAntall, sFb[i]);
                             break;
 
                         case 2:
@@ -228,15 +228,16 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                 for (int j = 3; j < 8 && j < iSize; j++)
                 {
                     iAntall = stoi(sDatatypes[i].substr(j, 1));
+                    int iAntallT = (stoi(sDatatypes[i].substr(2, 1)));      //Antall temperatur følere
                     if (iAntall && (j < 5 || j == 6))
                     {
                         xPid = true;
-                        xTempReg = (j > 3 ? true : xTempReg);
+                        xTempReg = (j > 3 && iAntallT ? true : xTempReg);
                     }
                     else if (iAntall && (j == 5 || j == 7))
                     {
                         xHyst = true;
-                        xTempReg = (j > 4 ?  true: xTempReg);
+                        xTempReg = (j > 4 && iAntallT ?  true: xTempReg);
                     }
                 }
 
@@ -255,7 +256,7 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                         switch (j)
                         {
                         case 1:
-                            Knx_Fb_In_Rb(sPath, iAntall);
+                            Knx_Fb_In_Hvac(sPath, iAntall);
                             break;
 
                         case 2:
@@ -359,6 +360,11 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                     {
                         switch (j)
                         {
+                        case 1:
+                            if (sFb[i] == "1" && iAntall > 1)
+                                Knx_Fb_Out_Hvac(sPath);
+                            break;
+
                         case 2:
                             Knx_Fb_Out_Rt(sPath, iAntall, sFb[i]);
                             break;
@@ -416,12 +422,12 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                 {
                     int iAntallT = (stoi(sDatatypes[i].substr(2, 1)));      //Antall temperatur følere
                     iAntall = (stoi(sDatatypes[i].substr(j, 1)));
-                    if ((iAntall > 0 || j == 1) && (j == 3 || xTempReg) && sFb[i] == "1")
+                    if (j == 1 || (iAntall > 0 && (j == 3 || xTempReg)) && sFb[i] == "1")
                     {
                         switch (j)
                         {
                         case 1:
-                            Knx_Fb_Hvac(sPath, &iCfc_Order, &iCfc_Id, &iCfc_y, iAntall);
+                            Knx_Fb_Hvac(sPath, &iCfc_Order, &iCfc_Id, &iCfc_y, iAntall, iAntallT);
                             break;
 
                         case 2:
@@ -1071,6 +1077,11 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                     {
                         switch (j)
                         {
+                        case 1:
+                            if (sFb[i] == "1" && iAntall > 1)
+                                Knx_cfc_Fb_Out_Hvac(sPath, &iCfc_y, iAntall, &iFb);
+                            break;
+
                         case 2:
                             Knx_cfc_Fb_Out_Rt(sPath, &iCfc_y, iAntall, &iFb, sFb[i]);
                             break;
@@ -1135,6 +1146,11 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                     {
                         switch (j)
                         {
+                        case 1:
+                            if (sFb[i] == "1" && iAntall > 1)
+                                Knx_cfc_Out_Hvac(sPath, sGVL, sAdresseFormat, sRom[i], &iCfc_Order, &iCfc_Id, &iCfc_y, iAntall, &iInOut, iFb);
+                            break;
+
                         case 2:
                             Knx_cfc_Out_Rt(sPath, sGVL, sAdresseFormat, sRom[i], &iCfc_Order, &iCfc_Id, &iCfc_y, iAntall, &iInOut, iFb, sFb[i]);
                             break;
