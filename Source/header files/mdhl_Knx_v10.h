@@ -422,7 +422,7 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                 {
                     int iAntallT = (stoi(sDatatypes[i].substr(2, 1)));      //Antall temperatur følere
                     iAntall = (stoi(sDatatypes[i].substr(j, 1)));
-                    if (j == 1 || (iAntall > 0 && (j == 3 || xTempReg)) && sFb[i] == "1")
+                    if (sFb[i] == "1" && (j == 1 || (iAntall > 0 && (j == 3 || xTempReg))))
                     {
                         switch (j)
                         {
@@ -830,7 +830,7 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                             break;
 
                         case 14:
-                            Knx_cfc_Rh_Cv(sPath, sGVL, sAdresseFormat, sRom[i], iMaster, &iKnx, &iCfc_Order, &iCfc_Id, &iCfc_y, &iCfc_x, &xSpace, &iKnxOutputs, iAntall);
+                            Knx_cfc_Rh_Cv(sPath, sGVL, sAdresseFormat, sRom[i], iMaster, &iKnx, &iCfc_Order, &iCfc_Id, &iCfc_y, &iCfc_x, &xSpace, iAntall);
                             iLast2 = iLast1;
                             iLast1 = j;
                             break;
@@ -1002,7 +1002,7 @@ void WriteXML_KNX(std::string sPath, bool(&bUsed)[1000], std::string& sGVL, std:
                 for (int j = 0; j < iSize; j++)
                 {
                     iAntall = stoi(sRomtype563[i].substr(j, 1));
-                    int iAntallT = (stoi(sDatatypes[i].substr(2, 1)));      //Antall temperatur følere
+                    int iAntallT = (stoi(sRomtype563[i].substr(2, 1)));      //Antall temperatur følere
                     if (iAntall > 0)
                     {
                         switch (j)

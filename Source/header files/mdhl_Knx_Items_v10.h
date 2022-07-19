@@ -5960,9 +5960,9 @@ void Knx_var_Rh_Cv(std::string& sPath, int& iMaster, int* iKnx, std::string& sRo
 
     for (int i = 1; i <= iAntall; i++)
     {
-        fOutput << "<variable name=\"M" << iMaster << "_" << sPreset << *iKnx << "_" << sRom << "_RH60" << i << "\">\n\t";
+        fOutput << "<variable name=\"M" << iMaster << "_" << sPreset << *iKnx << "_" << sRom << "_RH60" << i << "_CV\">\n\t";
         fOutput << "<type>\n\t";
-        fOutput << "<derived name=\"fbDPT_humidity_pro\" />\n\t";
+        fOutput << "<derived name=\"FbDPT_Value_Humidity_pro\" />\n\t";
         fOutput << "</type>\n\t";
 
         if (*xComment)
@@ -10009,7 +10009,16 @@ void Knx_cfc_Opm_Out(std::string& sPath, std::string& sGVL, std::string& sAdress
 
 
 
-void Knx_cfc_Rh_Cv(std::string& sPath, std::string& sGVL, std::string& sAdresseFormat, std::string& sRom, int& iMaster, int* iKnx, int* iCfc_Order, int* iCfc_Id, int* iCfc_y, int* iCfc_x, bool* xSpace, int* iKnxOutputs, int& iAntall)
+
+
+
+
+
+
+
+
+
+void Knx_cfc_Rh_Cv(std::string& sPath, std::string& sGVL, std::string& sAdresseFormat, std::string& sRom, int& iMaster, int* iKnx, int* iCfc_Order, int* iCfc_Id, int* iCfc_y, int* iCfc_x, bool* xSpace, int& iAntall)
 {
     std::ofstream fOutput(sPath, std::ios::app);
     std::string sPreset = Knx_Preset(*iKnx);
@@ -10028,100 +10037,181 @@ void Knx_cfc_Rh_Cv(std::string& sPath, std::string& sGVL, std::string& sAdresseF
         fOutput << "<connectionPointOut>\n\t";
         fOutput << "<expression />\n\t";
         fOutput << "</connectionPointOut>\n\t";
-        fOutput << "<expression>" << iMaster << "</expression>\n\t";
-        fOutput << "</inVariable>\n\t";
 
+        fOutput << "<expression>" << iMaster << "</expression>\n\t";
+
+        fOutput << "</inVariable>\n\t";
         fOutput << "<connector localId=\"" << (2 + *iCfc_Id) << "\" name=\"\">\n\t";
-        fOutput << "<position x=\"" << (9 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<position x=\"" << (5 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointIn>\n\t";
         fOutput << "<connection refLocalId=\"" << (1 + *iCfc_Id) << "\" formalParameter=\"" << iMaster << "\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</connector>\n\t";
-
         fOutput << "<inVariable localId=\"" << (3 + *iCfc_Id) << "\">\n\t";
         fOutput << "<position x=\"" << (18 + *iCfc_x) << "\" y=\"" << (31 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointOut>\n\t";
         fOutput << "<expression />\n\t";
         fOutput << "</connectionPointOut>\n\t";
-        fOutput << "<expression>" << *iKnx << "</expression>\n\t";
-        fOutput << "</inVariable>\n\t";
 
+        fOutput << "<expression>" << *iKnx << "</expression>\n\t";
+
+        fOutput << "</inVariable>\n\t";
         fOutput << "<connector localId=\"" << (4 + *iCfc_Id) << "\" name=\"\">\n\t";
-        fOutput << "<position x=\"" << (9 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<position x=\"" << (5 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointIn>\n\t";
         fOutput << "<connection refLocalId=\"" << (3 + *iCfc_Id) << "\" formalParameter=\"" << *iKnx << "\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</connector>\n\t";
-
         fOutput << "<inVariable localId=\"" << (5 + *iCfc_Id) << "\">\n\t";
-        fOutput << "<position x=\"" << (2 + *iCfc_x) << "\" y=\"" << (32 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<position x=\"" << (16 + *iCfc_x) << "\" y=\"" << (37 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointOut>\n\t";
         fOutput << "<expression />\n\t";
         fOutput << "</connectionPointOut>\n\t";
-        fOutput << "<expression>" << sGVL << "." << sAdresseFormat << "_" << sRom << ".RH60" << i << "_CMD</expression>\n\t";
-        fOutput << "</inVariable>\n\t";
 
+        fOutput << "<expression>typDPT</expression>\n\t";
+
+        fOutput << "</inVariable>\n\t";
         fOutput << "<connector localId=\"" << (6 + *iCfc_Id) << "\" name=\"\">\n\t";
-        fOutput << "<position x=\"" << (2 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<position x=\"" << (5 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<connection refLocalId=\"" << (5 + *iCfc_Id) << "\" formalParameter=\"" << sGVL << "." << sAdresseFormat << "_" << sRom << ".RH60" << i << "_CV\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (5 + *iCfc_Id) << "\" formalParameter=\"typDPT\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</connector>\n\t";
-
-        fOutput << "<inVariable localId=\"" << (7 + *iCfc_Id) << "\">\n\t";
-        fOutput << "<position x=\"" << (6 + *iCfc_x) << "\" y=\"" << (35 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<block localId=\"" << (7 + *iCfc_Id) << "\" executionOrderId=\"" << (0 + *iCfc_Order) << "\" typeName=\"FbDPT_Value_Humidity_pro\" instanceName=\"M" << iMaster << "_" << sPreset << *iKnx << "_" << sRom << "_RH60" << i << "_CV\">\n\t";
+        fOutput << "<position x=\"" << (23 + *iCfc_x) << "\" y=\"" << (28 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<inputVariables>\n\t";
+        fOutput << "<variable formalParameter=\"bPortKNX\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (0 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (2 + *iCfc_Id) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"dwIndex_DPT\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (1 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (4 + *iCfc_Id) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"rValue_IN\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (2 + *iCfc_y) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"xUpdate_KNX\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (3 + *iCfc_y) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"xRead_KNX\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (4 + *iCfc_y) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"tMinSendTime\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (5 + *iCfc_y) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"rSendOnDelta\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (6 + *iCfc_y) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "</inputVariables>\n\t";
+        fOutput << "<inOutVariables>\n\t";
+        fOutput << "<variable formalParameter=\"typDPT\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (7 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (6 + *iCfc_Id) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
         fOutput << "<connectionPointOut>\n\t";
         fOutput << "<expression />\n\t";
         fOutput << "</connectionPointOut>\n\t";
-        fOutput << "<expression>i</expression>\n\t";
-        fOutput << "</inVariable>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "</inOutVariables>\n\t";
+        fOutput << "<outputVariables>\n\t";
+        fOutput << "<variable formalParameter=\"rValue_OUT\">\n\t";
+        fOutput << "<connectionPointOut>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (0 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<expression />\n\t";
+        fOutput << "</connectionPointOut>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"xUpdate_PLC\">\n\t";
+        fOutput << "<connectionPointOut>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (1 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<expression />\n\t";
+        fOutput << "</connectionPointOut>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "<variable formalParameter=\"xTimeOut\">\n\t";
+        fOutput << "<connectionPointOut>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (2 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<expression />\n\t";
+        fOutput << "</connectionPointOut>\n\t";
+        fOutput << "</variable>\n\t";
+        fOutput << "</outputVariables>\n\t";
+        fOutput << "<addData>\n\t";
+        fOutput << "<data name=\"http://www.3s-software.com/plcopenxml/cfccalltype\" handleUnknown=\"implementation\">\n\t";
+
+        fOutput << "<CallType xmlns=\"\">functionblock</CallType>\n\t";
+
+        fOutput << "</data>\n\t";
+        fOutput << "</addData>\n\t";
+        fOutput << "</block>\n\t";
 
         fOutput << "<connector localId=\"" << (8 + *iCfc_Id) << "\" name=\"\">\n\t";
         fOutput << "<position x=\"" << (5 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<connection refLocalId=\"" << (7 + *iCfc_Id) << "\" formalParameter=\"i\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (7 + *iCfc_Id) << "\" formalParameter=\"rValue_OUT\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</connector>\n\t";
 
-        fOutput << "<inVariable localId=\"" << (9 + *iCfc_Id) << "\">\n\t";
-        fOutput << "<position x=\"" << (6 + *iCfc_x) << "\" y=\"" << (36 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<expression />\n\t";
-        fOutput << "</connectionPointOut>\n\t";
-        fOutput << "<expression>" << *iKnxOutputs << "</expression>\n\t";
-        fOutput << "</inVariable>\n\t";
 
-        fOutput << "<connector localId=\"" << (10 + *iCfc_Id) << "\" name=\"\">\n\t";
-        fOutput << "<position x=\"" << (5 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
+        //Nytt
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        fOutput << "<connector localId=\"" << (9 + *iCfc_Id) << "\" name=\"\">\n\t";
+        fOutput << "<position x=\"" << (05 + *iCfc_x) << "\" y=\"" << (289 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<connection refLocalId=\"" << (9 + *iCfc_Id) << "\" formalParameter=\"" << *iKnxOutputs << "\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (7 + *iCfc_Id) << "\" formalParameter=\"xUpdate_PLC\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</connector>\n\t";
 
-        fOutput << "<block localId=\"" << (11 + *iCfc_Id) << "\" executionOrderId=\"" << (0 + *iCfc_Order) << "\" typeName=\"EQ\">\n\t";
-        fOutput << "<position x=\"" << (11 + *iCfc_x) << "\" y=\"" << (33 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<block localId=\"" << (10 + *iCfc_Id) << "\" executionOrderId=\"" << (1 + *iCfc_Order) << "\" typeName=\"MOVE\">\n\t";
+        fOutput << "<position x=\"" << (23 + 16 + *iCfc_x) << "\" y=\"" << (29 + *iCfc_y) << "\" />\n\t";
         fOutput << "<inputVariables>\n\t";
-        fOutput << "<variable formalParameter=\"In1\">\n\t";
+
+        fOutput << "<variable formalParameter=\"EN\">\n\t";
         fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 0 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<relPosition x=\"0\" y=\"0\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (9 + *iCfc_Id) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "</variable>\n\t";
+
+        fOutput << "<variable formalParameter=\"In2\">\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"0\" y=\"1\" />\n\t";
         fOutput << "<connection refLocalId=\"" << (8 + *iCfc_Id) << "\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"In2\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 1 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connection refLocalId=\"" << (10 + *iCfc_Id) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
+
         fOutput << "</inputVariables>\n\t";
         fOutput << "<inOutVariables />\n\t";
         fOutput << "<outputVariables>\n\t";
-        fOutput << "<variable formalParameter=\"Out1\">\n\t";
+
+        fOutput << "<variable formalParameter=\"ENO\">\n\t";
         fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 0 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<relPosition x=\"0\" y=\"0\" />\n\t";
         fOutput << "<expression />\n\t";
         fOutput << "</connectionPointOut>\n\t";
         fOutput << "</variable>\n\t";
+
+        fOutput << "<variable formalParameter=\"Out2\">\n\t";
+        fOutput << "<connectionPointOut>\n\t";
+        fOutput << "<relPosition x=\"0\" y=\"1\" />\n\t";
+        fOutput << "<expression />\n\t";
+        fOutput << "</connectionPointOut>\n\t";
+        fOutput << "</variable>\n\t";
+
         fOutput << "</outputVariables>\n\t";
         fOutput << "<addData>\n\t";
         fOutput << "<data name=\"http://www.3s-software.com/plcopenxml/cfccalltype\" handleUnknown=\"implementation\">\n\t";
@@ -10130,108 +10220,29 @@ void Knx_cfc_Rh_Cv(std::string& sPath, std::string& sGVL, std::string& sAdresseF
         fOutput << "</addData>\n\t";
         fOutput << "</block>\n\t";
 
-        fOutput << "<connector localId=\"" << (12 + *iCfc_Id) << "\" name=\"\">\n\t";
-        fOutput << "<position x=\"" << (5 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<connector localId=\"" << (11 + *iCfc_Id) << "\" name=\"\">\n\t";
+        fOutput << "<position x=\"" << (05 + *iCfc_x) << "\" y=\"" << (1 + 288 + *iCfc_y) << "\" />\n\t";
         fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<connection refLocalId=\"" << (11 + *iCfc_Id) << "\" formalParameter=\"\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (10 + *iCfc_Id) << "\" formalParameter=\"\" />\n\t";
         fOutput << "</connectionPointIn>\n\t";
         fOutput << "</connector>\n\t";
 
-        fOutput << "<inVariable localId=\"" << (13 + *iCfc_Id) << "\">\n\t";
-        fOutput << "<position x=\"" << (16 + *iCfc_x) << "\" y=\"" << (36 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<expression />\n\t";
-        fOutput << "</connectionPointOut>\n\t";
-        fOutput << "<expression>typDPT</expression>\n\t";
-        fOutput << "</inVariable>\n\t";
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        fOutput << "<connector localId=\"" << (14 + *iCfc_Id) << "\" name=\"\">\n\t";
-        fOutput << "<position x=\"" << (9 + *iCfc_x) << "\" y=\"" << (275 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<connection refLocalId=\"" << (13 + *iCfc_Id) << "\" formalParameter=\"typDPT\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</connector>\n\t";
 
-        fOutput << "<block localId=\"" << (15 + *iCfc_Id) << "\" executionOrderId=\"" << (1 + *iCfc_Order) << "\" typeName=\"fbDPT_humidity_pro\" instanceName=\"M" << iMaster << "_" << sPreset << *iKnx << "_" << sRom << "_RH60" << i << "_CMD\">\n\t";
-        fOutput << "<position x=\"" << (23 + *iCfc_x) << "\" y=\"" << (28 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<inputVariables>\n\t";
-        fOutput << "<variable formalParameter=\"bPortKNX\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 0 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connection refLocalId=\"" << (2 + *iCfc_Id) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"dwIndex_DPT\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 1 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connection refLocalId=\"" << (4 + *iCfc_Id) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"xSwitch_IN\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 2 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connection refLocalId=\"" << (6 + *iCfc_Id) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"xUpdate_KNX\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 3 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connection refLocalId=\"" << (12 + *iCfc_Id) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"xRead_KNX\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 4 + *iCfc_y) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"tMinSendTime\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 5 + *iCfc_y) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "</inputVariables>\n\t";
-        fOutput << "<inOutVariables>\n\t";
-        fOutput << "<variable formalParameter=\"typDPT\">\n\t";
-        fOutput << "<connectionPointIn>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 7 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<connection refLocalId=\"" << (14 + *iCfc_Id) << "\" />\n\t";
-        fOutput << "</connectionPointIn>\n\t";
-        fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<expression />\n\t";
-        fOutput << "</connectionPointOut>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "</inOutVariables>\n\t";
-        fOutput << "<outputVariables>\n\t";
-        fOutput << "<variable formalParameter=\"xSwitch_OUT\">\n\t";
-        fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 0 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<expression />\n\t";
-        fOutput << "</connectionPointOut>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"xUpdate_PLC\">\n\t";
-        fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 1 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<expression />\n\t";
-        fOutput << "</connectionPointOut>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "<variable formalParameter=\"xTimeOut\">\n\t";
-        fOutput << "<connectionPointOut>\n\t";
-        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (16 + 2 + *iCfc_y) << "\" />\n\t";
-        fOutput << "<expression />\n\t";
-        fOutput << "</connectionPointOut>\n\t";
-        fOutput << "</variable>\n\t";
-        fOutput << "</outputVariables>\n\t";
-        fOutput << "<addData>\n\t";
-        fOutput << "<data name=\"http://www.3s-software.com/plcopenxml/cfccalltype\" handleUnknown=\"implementation\">\n\t";
-        fOutput << "<CallType xmlns=\"\">functionblock</CallType>\n\t";
-        fOutput << "</data>\n\t";
-        fOutput << "</addData>\n\t";
-        fOutput << "</block>\n\t";
 
-        (*iCfc_Order) += 2;
-        (*iCfc_Id) += 16;
+        fOutput << "<outVariable localId=\"" << (12 + *iCfc_Id) << "\" executionOrderId=\"" << (2 + *iCfc_Order) << "\">\n\t";
+        fOutput << "<position x=\"" << (37 + 8 + *iCfc_x) << "\" y=\"" << (32 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<connectionPointIn>\n\t";
+        fOutput << "<relPosition x=\"" << (0 + *iCfc_x) << "\" y=\"" << (0 + *iCfc_y) << "\" />\n\t";
+        fOutput << "<connection refLocalId=\"" << (11 + *iCfc_Id) << "\" />\n\t";
+        fOutput << "</connectionPointIn>\n\t";
+        fOutput << "<expression>" << sGVL << "." << sAdresseFormat << "_" << sRom << ".RT60" << i << "_CT</expression>\n\t";
+        fOutput << "</outVariable>\n\t";
+
+        (*iCfc_Order) += 3;
+        (*iCfc_Id) += 13;
         (*iKnx)++;
-        (*iKnxOutputs)++;
 
         if (*iCfc_x >= 40)
         {
